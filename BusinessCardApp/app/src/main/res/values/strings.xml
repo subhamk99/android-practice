@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Business Card App</string>
+    <string name="contact_mobile">+91 7978637650</string>
+    <string name="contact_email">subhamkhadanga97@gmail.com</string>
+    <string name="contact_social_media_handle">\@subhamk99</string>
+    <string name="contact_name">Subham Khadanga</string>
+    <string name="contact_title">Software Developer</string>
+</resources>
