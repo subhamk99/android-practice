@@ -1,12 +1,13 @@
 package com.example.businesscardapp
 
-import android.graphics.drawable.Icon
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -14,24 +15,18 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ExperimentalGraphicsApi
-import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.businesscardapp.ui.theme.BusinessCardAppTheme
-import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +44,18 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalGraphicsApi::class)
+class ListItemModel(icon: ImageVector, iconDescription: String, textData: String) {
+    var icon: ImageVector;
+    var iconDescription: String;
+    var textData: String;
+
+    init {
+        this.icon = icon;
+        this.iconDescription = iconDescription;
+        this.textData = textData;
+    }
+}
+
 @Composable
 fun BusinessCardApp() {
     Column(
@@ -59,86 +65,112 @@ fun BusinessCardApp() {
             .padding(24.dp),
 
         ) {
-        Column(
-            modifier = Modifier.weight(3f),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            var image = painterResource(id = R.drawable.android_logo)
-            Image(
-                painter = image,
-                contentDescription = "android_logo",
-                modifier = Modifier
-                    .size(width = 150.dp, height = 150.dp)
-                    .padding(vertical = 8.dp)
+        ContactLogoSection(
+            logoId = R.drawable.android_logo,
+            logoDescription = "android_logo",
+            name = "Subham Khadanga",
+            title = "Software Developer"
+        )
+        val listItems: MutableList<ListItemModel> = mutableListOf();
+        listItems.add(
+            ListItemModel(
+                Icons.Default.Call,
+                "call", "+91 7978637650"
             )
-            Text(
-                text = "Subham Khadanga",
-                color = Color.White,
-                fontSize = 40.sp,
-                textAlign = TextAlign.Center,
-                lineHeight = 36.sp,
-                modifier = Modifier
-                    .padding(vertical = 8.dp)
+        )
+        listItems.add(
+            ListItemModel(
+                Icons.Default.Share,
+                "instagram", "@subhamk_"
             )
-            Text(
-                text = "Software Developer", color = Color(0xFF3ddc84), fontSize = 24.sp,
-                modifier = Modifier.padding(vertical = 8.dp)
+        )
+        listItems.add(
+            ListItemModel(
+                Icons.Default.Email,
+                "email", "subhamkhadanga97@gmail.com"
+            )
+        )
+        ContactInfo(listItems)
+    }
+}
+
+@Composable
+fun ColumnScope.ContactLogoSection(
+    logoId: Int,
+    logoDescription: String,
+    name: String,
+    title: String
+) {
+    Column(
+        modifier = Modifier.weight(3f),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        var image = painterResource(id = logoId)
+        Image(
+            painter = image,
+            contentDescription = logoDescription,
+            modifier = Modifier
+                .size(width = 150.dp, height = 150.dp)
+                .padding(vertical = 8.dp)
+        )
+        Text(
+            text = name,
+            color = Color.White,
+            fontSize = 40.sp,
+            textAlign = TextAlign.Center,
+            lineHeight = 36.sp,
+            modifier = Modifier
+                .padding(vertical = 8.dp)
+        )
+        Text(
+            text = title, color = Color(0xFF3ddc84), fontSize = 24.sp,
+            modifier = Modifier.padding(vertical = 8.dp)
+        )
+    }
+}
+
+@Composable
+fun ColumnScope.ContactInfo(
+    list: List<ListItemModel>
+) {
+    LazyColumn(
+        modifier = Modifier
+            .weight(1f)
+            .padding(horizontal = 14.dp),
+        verticalArrangement = Arrangement.Center,
+    ) {
+        items(list) { item: ListItemModel ->
+            ListItem(
+                icon = item.icon,
+                iconDescription = item.iconDescription,
+                textData = item.textData
             )
         }
-        Column(
-            modifier = Modifier.weight(1f).padding(horizontal = 14.dp),
-            verticalArrangement = Arrangement.Center,
-        ) {
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 6.dp)
-            ) {
-                Icon(
-                    Icons.Default.Call, "call", tint = Color(0xFF3ddc84),
-                    modifier = Modifier.weight(2f)
-                )
-                Text(
-                    text = "+91 7978637650", color = Color.White, fontSize = 15.sp,
-                    modifier = Modifier.weight(4f)
-                )
-            }
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 6.dp)
-            ) {
-                Icon(
-                    Icons.Default.Share, "social_media_handle", tint = Color(0xFF3ddc84),
-                    modifier = Modifier.weight(2f)
-                )
-                Text(
-                    text = "@subhamk", color = Color.White, fontSize = 15.sp,
-                    modifier = Modifier.weight(4f)
-                )
-            }
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 6.dp)
-            ) {
-                Icon(
-                    Icons.Default.Email, "email", tint = Color(0xFF3ddc84),
-                    modifier = Modifier.weight(2f)
-                )
-                Text(
-                    text = "subhamkhadanga97@gmail.com", color = Color.White, fontSize = 15.sp,
-                    modifier = Modifier.weight(4f)
-                )
-            }
-        }
+    }
+}
+
+@Composable
+fun ListItem(
+    icon: ImageVector,
+    iconDescription: String,
+    textData: String
+) {
+    Row(
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 6.dp)
+    ) {
+        Icon(
+            icon, iconDescription, tint = Color(0xFF3ddc84),
+            modifier = Modifier.weight(2f)
+        )
+        Text(
+            text = textData, color = Color.White, fontSize = 15.sp,
+            modifier = Modifier.weight(4f)
+        )
     }
 }
 
