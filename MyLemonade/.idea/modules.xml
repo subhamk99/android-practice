@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/My_Lemonade.iml" filepath="$PROJECT_DIR$/.idea/modules/My_Lemonade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/My_Lemonade.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/My_Lemonade.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/My_Lemonade.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/My_Lemonade.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/My_Lemonade.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/My_Lemonade.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/My_Lemonade.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/My_Lemonade.app.unitTest.iml" />
+    </modules>
+  </component>
+</project>
